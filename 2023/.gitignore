@@ -37,4 +37,4 @@ zig-cache
 zig-out
 *.temp
 
-day1
+bin
