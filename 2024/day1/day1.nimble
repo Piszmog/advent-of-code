@@ -6,6 +6,7 @@ description   = "Day 1 for Advent of Code"
 license       = "MIT"
 srcDir        = "src"
 bin           = @["day1"]
+binDir        = "bin"
 
 
 # Dependencies

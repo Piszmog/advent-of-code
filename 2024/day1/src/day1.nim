@@ -1,4 +1,5 @@
 import strutils
+import sequtils
 import os
 import std/algorithm
 
@@ -14,7 +15,7 @@ proc handle(path: string, callback: HandleCallback) =
   for line in lines(path):
     callback(line)
 
-proc day1(path: string) =
+proc getData(path: string): (seq[int], seq[int]) =
   var left: seq[int] = @[]
   var right: seq[int] = @[]
   handle(path) do (line: string):
@@ -25,13 +26,28 @@ proc day1(path: string) =
   left.sort()
   right.sort()
 
+  return (left, right)
+
+proc day1(left: seq[int], right: seq[int]) =
   var total = 0
   for i in 0..left.len()-1:
     let dist = right[i] - left[i]
     total += abs(dist)
 
-  echo(total)
+  echo("Part 1: ", total)
+
+proc day2(left: seq[int], right: seq[int]) =
+  var total = 0
+  for i in 0..left.len()-1:
+    let num = left[i]
+    let count = right.count(num)
+    let sim = left[i] * count
+    total += sim
+
+  echo("Part 2: ", total)
 
 when isMainModule:
   let path = getPath()
-  day1(path)
+  let (left, right) = getData(path)
+  day1(left, right)
+  day2(left, right)
