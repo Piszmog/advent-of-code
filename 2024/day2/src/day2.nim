@@ -25,9 +25,8 @@ proc getData(path: string): seq[seq[int]] =
 proc isSafe(data: seq[int], skip: int = -1): bool =
   var increasing: Option[bool] = none(bool)
   var isSafe = true
-  let start = if skip == 0: 1 else: 0
 
-  var i = start
+  var i = if skip == 0: 1 else: 0
   while i < data.len() - 1:
     if skip == i:
       i += 1
@@ -62,7 +61,6 @@ proc part1(data: seq[seq[int]]) =
     let isSafe = isSafe(nums)
     if isSafe:
       count += 1
-
   echo("Part 1: ", count)
 
 proc tryIsSafe(data: seq[int]): bool =
@@ -80,7 +78,6 @@ proc part2(data: seq[seq[int]]) =
     let isSafe = tryIsSafe(nums)
     if isSafe:
       count += 1
-
   echo("Part 2: ", count)
 
 when isMainModule:
