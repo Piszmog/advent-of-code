@@ -64,12 +64,12 @@ proc part1(data: seq[seq[int]]) =
   echo("Part 1: ", count)
 
 proc tryIsSafe(data: seq[int]): bool =
-  var i = -1
-  while i < data.len():
-    let isSafe = isSafe(data, i)
+  var skip = -1
+  while skip < data.len():
+    let isSafe = isSafe(data, skip)
     if isSafe:
       return true
-    i += 1
+    skip += 1
   return false
 
 proc part2(data: seq[seq[int]]) =
