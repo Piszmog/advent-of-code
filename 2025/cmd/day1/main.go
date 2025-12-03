@@ -19,7 +19,7 @@ func main() {
 
 	part1Count := 0
 	part2Count := 0
-	num := 50
+	newNum := 50
 	reader := bufio.NewReader(f)
 	for {
 		line, _, err := reader.ReadLine()
@@ -37,29 +37,34 @@ func main() {
 
 		// 100 is a full rotation, so we can take the differnce to what to actually work with
 		if dirCount >= 100 {
+			fmt.Println(string(line), dirCount/100)
 			part2Count += dirCount / 100
 			dirCount = dirCount % 100
 		}
 
+		originalNum := newNum
 		switch dir {
 		case directionLeft:
-			if num >= dirCount {
-				num -= dirCount
+			if newNum >= dirCount {
+				newNum -= dirCount
 			} else {
-				part2Count++
-				num = 100 - (dirCount - num)
+				newNum = 100 - (dirCount - newNum)
 			}
 		case directionRight:
-			num += dirCount
-			if num > 99 {
-				num = num - 100
+			newNum += dirCount
+			if newNum > 99 {
+				newNum = newNum - 100
 			}
 		default:
 			log.Fatalln("unknown direction: ", dir)
 		}
 
-		if num == 0 {
+		if newNum == 0 {
 			part1Count++
+			part2Count++
+		} else if dir == directionLeft && originalNum < newNum && originalNum != 0 {
+			part2Count++
+		} else if dir == directionRight && newNum < originalNum && originalNum != 0 {
 			part2Count++
 		}
 	}
