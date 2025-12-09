@@ -39,6 +39,7 @@ func main() {
 	}
 
 	fmt.Println("Part 1:", part1(rolls))
+	fmt.Println("Part 2:", part2(rolls))
 }
 
 func part1(rolls map[roll]struct{}) int {
@@ -50,6 +51,35 @@ func part1(rolls map[roll]struct{}) int {
 		}
 	}
 	return result
+}
+
+func part2(rolls map[roll]struct{}) int {
+	rollsToCheck := rolls
+	result := 0
+	for {
+		leftovers, taken := nextGeneration(rollsToCheck)
+		if taken == 0 {
+			break
+		}
+		rollsToCheck = leftovers
+		result += taken
+	}
+	return result
+}
+
+func nextGeneration(rolls map[roll]struct{}) (map[roll]struct{}, int) {
+	taken := 0
+	newRolls := make(map[roll]struct{})
+
+	for r := range rolls {
+		count := countNeighbors(r, rolls)
+		if count < 4 {
+			taken++
+		} else {
+			newRolls[r] = struct{}{}
+		}
+	}
+	return newRolls, taken
 }
 
 func countNeighbors(r roll, rolls map[roll]struct{}) int {
